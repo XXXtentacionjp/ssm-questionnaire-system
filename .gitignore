@@ -1,0 +1,25 @@
+target/
+*.war
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# 日志与本地数据库产物
+logs/
+*.log
+*.db
+*.mv.db
+*.trace.db
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 本地配置，包含真实数据库口令，不入库
+jdbc-local.properties
