@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.questionnaire.mapper.QuestionnaireMapper">
+
+    <sql id="Base_Column_List">
+        id, title, description, creator_id, status, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="Questionnaire" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_questionnaire (title, description, creator_id, status, create_time, update_time)
+        VALUES (#{title}, #{description}, #{creatorId}, #{status}, #{createTime}, #{updateTime})
+    </insert>
+
+    <select id="selectById" parameterType="long" resultType="Questionnaire">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_questionnaire
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectByCreatorId" resultType="Questionnaire">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_questionnaire
+        WHERE creator_id = #{creatorId}
+        ORDER BY create_time DESC, id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countByCreatorId" parameterType="long" resultType="long">
+        SELECT COUNT(1) FROM t_questionnaire WHERE creator_id = #{creatorId}
+    </select>
+
+    <update id="updateById" parameterType="Questionnaire">
+        UPDATE t_questionnaire
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            update_time = #{updateTime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM t_questionnaire WHERE id = #{id}
+    </delete>
+</mapper>
