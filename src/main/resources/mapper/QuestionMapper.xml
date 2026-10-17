@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.questionnaire.mapper.QuestionMapper">
+
+    <insert id="insert" parameterType="Question" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_question (questionnaire_id, content, type, sort_no, create_time)
+        VALUES (#{questionnaireId}, #{content}, #{type}, #{sortNo}, #{createTime})
+    </insert>
+
+    <select id="selectByQuestionnaireId" parameterType="long" resultType="Question">
+        SELECT id, questionnaire_id, content, type, sort_no, create_time
+        FROM t_question
+        WHERE questionnaire_id = #{questionnaireId}
+        ORDER BY sort_no ASC, id ASC
+    </select>
+
+    <select id="countByQuestionnaireId" parameterType="long" resultType="int">
+        SELECT COUNT(1) FROM t_question WHERE questionnaire_id = #{questionnaireId}
+    </select>
+
+    <delete id="deleteByQuestionnaireId" parameterType="long">
+        DELETE FROM t_question WHERE questionnaire_id = #{questionnaireId}
+    </delete>
+</mapper>
